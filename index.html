@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Manajemen Kos Modern</title>
-    <!-- Google Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -22,296 +21,58 @@
             --border: #e2e8f0;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-        }
+        /* Login Screen */
+        #login-section { display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%); padding: 20px; }
+        .login-card { background: var(--card-bg); padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .login-card h2 { margin-bottom: 8px; color: var(--text-main); }
+        .login-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; }
+        .input-group { margin-bottom: 16px; text-align: left; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; outline: none; }
+        .btn { width: 100%; padding: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+        .btn:hover { background-color: var(--primary-dark); }
+        .login-error { color: var(--danger); font-size: 0.85rem; margin-top: 12px; display: none; }
 
-        /* --- LOGIN PAGE --- */
-        #login-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-            padding: 20px;
-        }
+        /* App Dashboard */
+        #app-section { display: none; padding: 24px; max-width: 1200px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: var(--card-bg); padding: 16px 24px; border-radius: 12px; }
+        header h1 { font-size: 1.4rem; color: var(--primary); }
+        .btn-logout { background: #fee2e2; color: var(--danger); border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
-        .login-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .login-card h2 {
-            margin-bottom: 8px;
-            color: var(--text-main);
-        }
-
-        .login-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 24px;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .input-group input:focus {
-            border-color: var(--primary);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .login-error {
-            color: var(--danger);
-            font-size: 0.85rem;
-            margin-top: 12px;
-            display: none;
-        }
-
-        /* --- DASHBOARD APP --- */
-        #app-section {
-            display: none;
-            padding: 24px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            background: var(--card-bg);
-            padding: 16px 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        header h1 {
-            font-size: 1.4rem;
-            color: var(--primary);
-        }
-
-        .btn-logout {
-            background: #fee2e2;
-            color: var(--danger);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-        .btn-logout:hover {
-            background: #fecaca;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            border-left: 4px solid var(--primary);
-        }
-
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 12px; border-left: 4px solid var(--primary); }
         .stat-card.success { border-left-color: var(--success); }
         .stat-card.warning { border-left-color: var(--warning); }
+        .stat-card h4 { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 6px; }
+        .stat-card span { font-size: 1.5rem; font-weight: 700; }
 
-        .stat-card h4 {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
+        .main-grid { display: grid; grid-template-columns: 350px 1fr; gap: 24px; }
+        @media(max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
 
-        .stat-card span {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
+        .card { background: var(--card-bg); padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 16px; }
 
-        /* Main Grid Content */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 24px;
-        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; outline: none; }
 
-        @media(max-width: 900px) {
-            .main-grid { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            margin-bottom: 24px;
-        }
-
-        .card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            color: var(--text-main);
-        }
-
-        /* Form Controls */
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-muted);
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--primary);
-        }
-
-        #form-status {
-            text-align: center;
-            font-size: 0.85rem;
-            margin-top: 10px;
-            font-weight: 600;
-        }
-
-        /* Table & Search */
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .search-box input {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.9rem;
-            width: 220px;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.85rem;
-        }
-
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            background-color: #f1f5f9;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .badge {
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+        .search-box input { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; width: 220px; }
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
+        th, td { padding: 12px; border-bottom: 1px solid var(--border); }
+        th { background-color: #f1f5f9; color: var(--text-muted); }
+        .badge { padding: 4px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
         .badge.lunas { background: #d1fae5; color: #065f46; }
         .badge.belum { background: #fee2e2; color: #991b1b; }
-
-        .action-btns {
-            display: flex;
-            gap: 6px;
-        }
-
-        .btn-action {
-            padding: 6px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: white;
-        }
-
+        .action-btns { display: flex; gap: 6px; }
+        .btn-action { padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; color: white; font-size: 0.75srem; }
         .btn-wa { background: #25d366; }
         .btn-receipt { background: #3b82f6; }
+        #form-status { text-align: center; font-size: 0.85rem; margin-top: 10px; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -323,11 +84,11 @@
             <p>Silakan masuk untuk mengelola data kos</p>
             <div class="input-group">
                 <label>Username</label>
-                <input type="text" id="username" placeholder="Masukkan username (admin)">
+                <input type="text" id="username" placeholder="admin">
             </div>
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" id="password" placeholder="Masukkan password (12345)">
+                <input type="password" id="password" placeholder="12345">
             </div>
             <button class="btn" onclick="handleLogin()">Masuk Dashboard</button>
             <p id="login-error" class="login-error">Username atau password salah!</p>
@@ -341,7 +102,6 @@
             <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
         </header>
 
-        <!-- KARTU STATISTIK -->
         <div class="stats-grid">
             <div class="stat-card">
                 <h4>Total Penghuni</h4>
@@ -358,33 +118,34 @@
         </div>
 
         <div class="main-grid">
-            <!-- FORM INPUT -->
+            <!-- FORM INPUT (Menggunakan Target Iframe agar tidak CORS error) -->
             <div class="card">
                 <h3>Tambah Penghuni</h3>
-                <form id="kos-form">
+                <form id="kos-form" method="POST" target="hidden_iframe">
+                    <input type="hidden" name="redirect_url" id="redirect_url">
                     <div class="form-group">
                         <label>Nama Penghuni</label>
-                        <input type="text" id="nama" required placeholder="Contoh: Andi Pratama">
+                        <input type="text" name="nama" required placeholder="Contoh: Andi Pratama">
                     </div>
                     <div class="form-group">
                         <label>Nomor Kamar</label>
-                        <input type="text" id="kamar" required placeholder="Contoh: A-01">
+                        <input type="text" name="kamar" required placeholder="Contoh: A-01">
                     </div>
                     <div class="form-group">
                         <label>No. WhatsApp</label>
-                        <input type="text" id="hp" required placeholder="08123456789">
+                        <input type="text" name="hp" required placeholder="08123456789">
                     </div>
                     <div class="form-group">
                         <label>Tanggal Masuk</label>
-                        <input type="date" id="tanggal" required>
+                        <input type="date" name="tanggal" required>
                     </div>
                     <div class="form-group">
                         <label>Biaya Sewa (Rp)</label>
-                        <input type="number" id="sewa" required placeholder="800000">
+                        <input type="number" name="sewa" required placeholder="800000">
                     </div>
                     <div class="form-group">
                         <label>Status Pembayaran</label>
-                        <select id="statusBayar">
+                        <select name="status">
                             <option value="Lunas">Lunas</option>
                             <option value="Belum Lunas">Belum Lunas</option>
                         </select>
@@ -392,6 +153,8 @@
                     <button type="submit" id="btn-save" class="btn" style="margin-top: 8px;">Simpan Data</button>
                     <p id="form-status"></p>
                 </form>
+                <!-- Iframe tersembunyi penangkap respon -->
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="submitted=true;"></iframe>
             </div>
 
             <!-- TABEL DATA -->
@@ -399,7 +162,7 @@
                 <div class="table-header">
                     <h3>Daftar Penghuni Kos</h3>
                     <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Cari penghuni/kamar..." onkeyup="filterTable()">
+                        <input type="text" id="search-input" placeholder="Cari penghuni..." onkeyup="filterTable()">
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -424,35 +187,63 @@
     </div>
 
     <script>
-        // GANTI URL DI BAWAH INI DENGAN WEB APP URL DARI GOOGLE APPS SCRIPT ANDA
-        const scriptURL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnRxGy53xFCME9ZWA3xra5o4xwteq6Vm--e9I7sTqwoxvDBQTXnBJNVjwXwO_CO6wd4iKVqJCSV8tJZm0mQcrWnmf4Ld4wMPwVpmH9yRTzrGkoJIoo15sRqMSTkmUhB8re1ZTMc6QbhForwoKjRIqcFk1chFi9DkJYirQjDCbRBLCT9j3PlpKTaM1j1gemyAqBH2uRxvA3QkPgArWKw_ZJNFiP8r3uOZsFswMkcYTSfLcHwUw56FzroFkFXFbfQk6RSOiLMHJk3DzjIktejZyZicGbTnFw&lib=MoP_kz_PdpvAdWVlrRgE-GO9LHLiH139a';
+        // === GANTI DENGAN URL WEB APP APPS SCRIPT ANDA DI BAWAH INI ===
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbySARZ0-FXq2pSUObZj-9xxlX59_ctSLSBXo7Q4OvfK8KLfdgmCeNN6mN3lLAR-MAG1fw/exec';
+
+        document.getElementById('kos-form').action = scriptURL;
+        document.getElementById('redirect_url').value = window.location.href.split('?')[0];
 
         let kosDataList = [];
+        let submitted = false;
 
-        // Sistem Login Sederhana
+        // Cek status setelah redirect dari Apps Script
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('status')) {
+                // Auto login jika habis submit agar langsung masuk dashboard
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('app-section').style.display = 'block';
+                loadData();
+
+                const statusEl = document.getElementById('form-status');
+                if (urlParams.get('status') === 'success') {
+                    statusEl.style.color = "var(--success)";
+                    statusEl.innerText = "Data berhasil disimpan ke Google Sheets!";
+                    document.getElementById('kos-form').reset();
+                } else {
+                    statusEl.style.color = "var(--danger)";
+                    statusEl.innerText = "Gagal menyimpan data!";
+                }
+                // Bersihkan URL dari parameter status
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
         function handleLogin() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            const errText = document.getElementById('login-error');
-
-            // Default login: admin / 12345
             if (user === 'admin' && pass === '12345') {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('app-section').style.display = 'block';
                 loadData();
             } else {
-                errText.style.display = 'block';
+                document.getElementById('login-error').style.display = 'block';
             }
         }
 
         function handleLogout() {
             document.getElementById('app-section').style.display = 'none';
             document.getElementById('login-section').style.display = 'flex';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
         }
 
-        // Ambil Data dari Google Sheets
+        const form = document.getElementById('kos-form');
+        const btnSave = document.getElementById('btn-save');
+
+        form.addEventListener('submit', () => {
+            btnSave.disabled = true;
+            btnSave.innerText = "Menyimpan ke Google Sheets...";
+        });
+
         function loadData() {
             fetch(scriptURL)
             .then(res => res.json())
@@ -463,21 +254,16 @@
                     updateStats(kosDataList);
                 }
             })
-            .catch(err => {
-                console.error("Gagal memuat data", err);
-            });
+            .catch(err => console.error("Gagal memuat data", err));
         }
 
-        // Render Data ke Tabel HTML
         function renderTable(data) {
             const tbody = document.getElementById('table-data');
             tbody.innerHTML = '';
-
             if(data.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Belum ada data penghuni kos.</td></tr>`;
                 return;
             }
-
             data.forEach(item => {
                 const badgeClass = item.status === 'Lunas' ? 'lunas' : 'belum';
                 const tr = document.createElement('tr');
@@ -489,7 +275,7 @@
                     <td><span class="badge ${badgeClass}">${item.status}</span></td>
                     <td>
                         <div class="action-btns">
-                            <button class="btn-action btn-wa" onclick="sendWA('${item.hp}', '${item.nama}', '${item.kamar}')" title="Kirim Tagihan WA"><i class="fa-brands fa-whatsapp"></i></button>
+                            <button class="btn-action btn-wa" onclick="sendWA('${item.hp}', '${item.nama}', '${item.kamar}')" title="Kirim WA"><i class="fa-brands fa-whatsapp"></i></button>
                             <button class="btn-action btn-receipt" onclick="printReceipt('${item.nama}', '${item.kamar}', '${item.sewa}', '${item.status}')" title="Cetak Kuitansi"><i class="fa-solid fa-receipt"></i></button>
                         </div>
                     </td>
@@ -498,23 +284,19 @@
             });
         }
 
-        // Update Statistik Dashboard
         function updateStats(data) {
             document.getElementById('stat-total').innerText = data.length;
             const lunasCount = data.filter(i => i.status === 'Lunas').length;
-            const belumCount = data.length - lunasCount;
             document.getElementById('stat-lunas').innerText = lunasCount;
-            document.getElementById('stat-belum').innerText = belumCount;
+            document.getElementById('stat-belum').innerText = data.length - lunasCount;
         }
 
-        // Kirim Pesan WhatsApp Otomatis
         function sendWA(hp, nama, kamar) {
             let cleanPhone = hp.startsWith('0') ? '62' + hp.slice(1) : hp;
             const text = `Halo Kak *${nama}* (Kamar ${kamar}), ini pengingat pembayaran sewa kos ya. Terima kasih!`;
             window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // Cetak Kuitansi Sederhana
         function printReceipt(nama, kamar, sewa, status) {
             const win = window.open('', '', 'width=400,height=500');
             win.document.write(`
@@ -527,7 +309,7 @@
                         <p><strong>Kamar:</strong> ${kamar}</p>
                         <p><strong>Jumlah:</strong> Rp ${Number(sewa).toLocaleString('id-ID')}</p>
                         <p><strong>Status:</strong> ${status}</p>
-                        <p style="text-align:right; margin-top:20px; font-size:0.8rem;">Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}</p>
+                        <p style="text-align:right; margin-top:20px; font-size:0.8rem;">Tanggal: ${new Date().toLocaleDateString('id-ID')}</p>
                     </div>
                 </body></html>
             `);
@@ -535,7 +317,6 @@
             win.print();
         }
 
-        // Fitur Pencarian Data di Tabel
         function filterTable() {
             const keyword = document.getElementById('search-input').value.toLowerCase();
             const filtered = kosDataList.filter(item => 
@@ -544,51 +325,6 @@
             );
             renderTable(filtered);
         }
-
-        // Simpan Form Penghuni Baru
-        const form = document.getElementById('kos-form');
-        const btnSave = document.getElementById('btn-save');
-        const formStatus = document.getElementById('form-status');
-
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            btnSave.disabled = true;
-            btnSave.innerText = "Menyimpan...";
-            formStatus.innerText = "";
-
-            const payload = {
-                nama: document.getElementById('nama').value,
-                kamar: document.getElementById('kamar').value,
-                hp: document.getElementById('hp').value,
-                tanggal: document.getElementById('tanggal').value,
-                sewa: document.getElementById('sewa').value,
-                status: document.getElementById('statusBayar').value
-            };
-
-            fetch(scriptURL, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(response => {
-                if(response.result === 'success') {
-                    formStatus.style.color = "var(--success)";
-                    formStatus.innerText = "Data berhasil disimpan!";
-                    form.reset();
-                    loadData(); // Refresh data tabel & statistik
-                } else {
-                    throw new Error(response.error);
-                }
-            })
-            .catch(err => {
-                formStatus.style.color = "var(--danger)";
-                formStatus.innerText = "Gagal menyimpan!";
-            })
-            .finally(() => {
-                btnSave.disabled = false;
-                btnSave.innerText = "Simpan Data";
-            });
-        });
     </script>
 </body>
 </html>
