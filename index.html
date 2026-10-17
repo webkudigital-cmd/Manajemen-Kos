@@ -3,196 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Kelola Kos</title>
+    <title>Aplikasi Manajemen Kos Modern</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary: #2c3e50;
-            --accent: #27ae60;
-            --bg: #f4f7f6;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 20px;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 25px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .form-group {
+        /* --- LOGIN PAGE --- */
+        #login-section {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            padding: 20px;
         }
 
-        .form-group label {
+        .login-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 0.9em;
+            margin-bottom: 6px;
+            color: var(--text-main);
         }
 
-        .form-group input, .form-group select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        .btn-submit {
-            grid-column: 1 / -1;
-            background-color: var(--accent);
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 10px;
             transition: background 0.2s;
         }
 
-        .btn-submit:hover {
-            background-color: #219150;
+        .btn:hover {
+            background-color: var(--primary-dark);
         }
 
-        #status {
+        .login-error {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* --- DASHBOARD APP --- */
+        #app-section {
+            display: none;
+            padding: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        header h1 {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+
+        .btn-logout {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-logout:hover {
+            background: #fecaca;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card.success { border-left-color: var(--success); }
+        .stat-card.warning { border-left-color: var(--warning); }
+
+        .stat-card h4 {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .stat-card span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Main Grid Content */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+        }
+
+        @media(max-width: 900px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 24px;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+        }
+
+        #form-status {
             text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            font-weight: 600;
         }
 
-        .success { color: #27ae60; }
-        .error { color: #e74c3c; }
-
-        /* Responsif untuk layar HP */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .card { padding: 15px; }
+        /* Table & Search */
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
+
+        .search-box input {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            width: 220px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge.lunas { background: #d1fae5; color: #065f46; }
+        .badge.belum { background: #fee2e2; color: #991b1b; }
+
+        .action-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-action {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .btn-wa { background: #25d366; }
+        .btn-receipt { background: #3b82f6; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🏠 Manajemen Data Kos</h1>
-
-    <div class="card">
-        <h3>Input Data Penghuni Baru</h3>
-        <form id="kos-form">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="nama">Nama Penghuni</label>
-                    <input type="text" id="nama" required placeholder="Contoh: Budi Santoso">
-                </div>
-
-                <div class="form-group">
-                    <label for="kamar">Nomor Kamar</label>
-                    <input type="text" id="kamar" required placeholder="Contoh: A-01">
-                </div>
-
-                <div class="form-group">
-                    <label for="hp">No. WhatsApp/HP</label>
-                    <input type="tel" id="hp" required placeholder="08123456789">
-                </div>
-
-                <div class="form-group">
-                    <label for="tanggal">Tanggal Masuk</label>
-                    <input type="date" id="tanggal" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="sewa">Biaya Sewa / Bulan (Rp)</label>
-                    <input type="number" id="sewa" required placeholder="800000">
-                </div>
-
-                <div class="form-group">
-                    <label for="statusBayar">Status Pembayaran</label>
-                    <select id="statusBayar" required>
-                        <option value="Lunas">Lunas</option>
-                        <option value="Belum Lunas">Belum Lunas</option>
-                    </select>
-                </div>
-
-                <button type="submit" id="btn-save" class="btn-submit">Simpan Data Penghuni</button>
+    <!-- HALAMAN LOGIN -->
+    <div id="login-section">
+        <div class="login-card">
+            <h2>Portal Kos</h2>
+            <p>Silakan masuk untuk mengelola data kos</p>
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="username" placeholder="Masukkan username (admin)">
             </div>
-        </form>
-        <p id="status"></p>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Masukkan password (12345)">
+            </div>
+            <button class="btn" onclick="handleLogin()">Masuk Dashboard</button>
+            <p id="login-error" class="login-error">Username atau password salah!</p>
+        </div>
     </div>
-</div>
 
-<script>
-    // masukkan URL Web App Apps Script Anda di sini
-    const scriptURL = 'URL_WEB_APP_ANDA_DI_SINI';
+    <!-- HALAMAN UTAMA APLIKASI -->
+    <div id="app-section">
+        <header>
+            <h1><i class="fa-solid fa-house-chimney"></i> Manajemen Kos Pintar</h1>
+            <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+        </header>
 
-    const form = document.getElementById('kos-form');
-    const statusText = document.getElementById('status');
-    const btnSave = document.getElementById('btn-save');
+        <!-- KARTU STATISTIK -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Total Penghuni</h4>
+                <span id="stat-total">0</span>
+            </div>
+            <div class="stat-card success">
+                <h4>Sudah Lunas</h4>
+                <span id="stat-lunas">0</span>
+            </div>
+            <div class="stat-card warning">
+                <h4>Belum Lunas</h4>
+                <span id="stat-belum">0</span>
+            </div>
+        </div>
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
+        <div class="main-grid">
+            <!-- FORM INPUT -->
+            <div class="card">
+                <h3>Tambah Penghuni</h3>
+                <form id="kos-form">
+                    <div class="form-group">
+                        <label>Nama Penghuni</label>
+                        <input type="text" id="nama" required placeholder="Contoh: Andi Pratama">
+                    </div>
+                    <div class="form-group">
+                        <label>Nomor Kamar</label>
+                        <input type="text" id="kamar" required placeholder="Contoh: A-01">
+                    </div>
+                    <div class="form-group">
+                        <label>No. WhatsApp</label>
+                        <input type="text" id="hp" required placeholder="08123456789">
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Masuk</label>
+                        <input type="date" id="tanggal" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Biaya Sewa (Rp)</label>
+                        <input type="number" id="sewa" required placeholder="800000">
+                    </div>
+                    <div class="form-group">
+                        <label>Status Pembayaran</label>
+                        <select id="statusBayar">
+                            <option value="Lunas">Lunas</option>
+                            <option value="Belum Lunas">Belum Lunas</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="btn-save" class="btn" style="margin-top: 8px;">Simpan Data</button>
+                    <p id="form-status"></p>
+                </form>
+            </div>
 
-        btnSave.disabled = true;
-        btnSave.innerText = "Menyimpan Data...";
-        statusText.innerText = "";
+            <!-- TABEL DATA -->
+            <div class="card">
+                <div class="table-header">
+                    <h3>Daftar Penghuni Kos</h3>
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Cari penghuni/kamar..." onkeyup="filterTable()">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kamar</th>
+                                <th>Nama</th>
+                                <th>No. HP</th>
+                                <th>Sewa</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-data">
+                            <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        const payload = {
-            nama: document.getElementById('nama').value,
-            kamar: document.getElementById('kamar').value,
-            hp: document.getElementById('hp').value,
-            tanggal: document.getElementById('tanggal').value,
-            sewa: document.getElementById('sewa').value,
-            status: document.getElementById('statusBayar').value
-        };
+    <script>
+        // GANTI URL DI BAWAH INI DENGAN WEB APP URL DARI GOOGLE APPS SCRIPT ANDA
+        const scriptURL = 'URL_WEB_APP_ANDA_DI_SINI';
 
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(response => {
-            if (response.result === 'success') {
-                statusText.className = "success";
-                statusText.innerText = `Data Berhasil Disimpan! ID Penghuni: ${response.id}`;
-                form.reset();
+        let kosDataList = [];
+
+        // Sistem Login Sederhana
+        function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errText = document.getElementById('login-error');
+
+            // Default login: admin / 12345
+            if (user === 'admin' && pass === '12345') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('app-section').style.display = 'block';
+                loadData();
             } else {
-                throw new Error(response.error);
+                errText.style.display = 'block';
             }
-        })
-        .catch(err => {
-            statusText.className = "error";
-            statusText.innerText = "Gagal menyimpan data: " + err.message;
-        })
-        .finally(() => {
-            btnSave.disabled = false;
-            btnSave.innerText = "Simpan Data Penghuni";
-        });
-    });
-</script>
+        }
 
+        function handleLogout() {
+            document.getElementById('app-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Ambil Data dari Google Sheets
+        function loadData() {
+            fetch(scriptURL)
+            .then(res => res.json())
+            .then(response => {
+                if(response.result === 'success') {
+                    kosDataList = response.data;
+                    renderTable(kosDataList);
+                    updateStats(kosDataList);
+                }
+            })
+            .catch(err => {
+                console.error("Gagal memuat data", err);
+            });
+        }
+
+        // Render Data ke Tabel HTML
+        function renderTable(data) {
+            const tbody = document.getElementById('table-data');
+            tbody.innerHTML = '';
+
+            if(data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Belum ada data penghuni kos.</td></tr>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const badgeClass = item.status === 'Lunas' ? 'lunas' : 'belum';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${item.kamar}</strong></td>
+                    <td>${item.nama}</td>
+                    <td>${item.hp}</td>
+                    <td>Rp ${Number(item.sewa).toLocaleString('id-ID')}</td>
+                    <td><span class="badge ${badgeClass}">${item.status}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-action btn-wa" onclick="sendWA('${item.hp}', '${item.nama}', '${item.kamar}')" title="Kirim Tagihan WA"><i class="fa-brands fa-whatsapp"></i></button>
+                            <button class="btn-action btn-receipt" onclick="printReceipt('${item.nama}', '${item.kamar}', '${item.sewa}', '${item.status}')" title="Cetak Kuitansi"><i class="fa-solid fa-receipt"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Update Statistik Dashboard
+        function updateStats(data) {
+            document.getElementById('stat-total').innerText = data.length;
+            const lunasCount = data.filter(i => i.status === 'Lunas').length;
+            const belumCount = data.length - lunasCount;
+            document.getElementById('stat-lunas').innerText = lunasCount;
+            document.getElementById('stat-belum').innerText = belumCount;
+        }
+
+        // Kirim Pesan WhatsApp Otomatis
+        function sendWA(hp, nama, kamar) {
+            let cleanPhone = hp.startsWith('0') ? '62' + hp.slice(1) : hp;
+            const text = `Halo Kak *${nama}* (Kamar ${kamar}), ini pengingat pembayaran sewa kos ya. Terima kasih!`;
+            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // Cetak Kuitansi Sederhana
+        function printReceipt(nama, kamar, sewa, status) {
+            const win = window.open('', '', 'width=400,height=500');
+            win.document.write(`
+                <html lang="id"><head><title>Kuitansi Kos</title>
+                <style>body{font-family:sans-serif;padding:20px;color:#333;}h2{text-align:center;color:#4f46e5;}.box{border:1px dashed #ccc;padding:15px;border-radius:6px;margin-top:15px;}</style></head>
+                <body>
+                    <h2>KUITANSI SEWA KOS</h2>
+                    <div class="box">
+                        <p><strong>Nama:</strong> ${nama}</p>
+                        <p><strong>Kamar:</strong> ${kamar}</p>
+                        <p><strong>Jumlah:</strong> Rp ${Number(sewa).toLocaleString('id-ID')}</p>
+                        <p><strong>Status:</strong> ${status}</p>
+                        <p style="text-align:right; margin-top:20px; font-size:0.8rem;">Tanggal Cetak: ${new Date().toLocaleDateString('id-ID')}</p>
+                    </div>
+                </body></html>
+            `);
+            win.document.close();
+            win.print();
+        }
+
+        // Fitur Pencarian Data di Tabel
+        function filterTable() {
+            const keyword = document.getElementById('search-input').value.toLowerCase();
+            const filtered = kosDataList.filter(item => 
+                item.nama.toLowerCase().includes(keyword) || 
+                item.kamar.toLowerCase().includes(keyword)
+            );
+            renderTable(filtered);
+        }
+
+        // Simpan Form Penghuni Baru
+        const form = document.getElementById('kos-form');
+        const btnSave = document.getElementById('btn-save');
+        const formStatus = document.getElementById('form-status');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btnSave.disabled = true;
+            btnSave.innerText = "Menyimpan...";
+            formStatus.innerText = "";
+
+            const payload = {
+                nama: document.getElementById('nama').value,
+                kamar: document.getElementById('kamar').value,
+                hp: document.getElementById('hp').value,
+                tanggal: document.getElementById('tanggal').value,
+                sewa: document.getElementById('sewa').value,
+                status: document.getElementById('statusBayar').value
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if(response.result === 'success') {
+                    formStatus.style.color = "var(--success)";
+                    formStatus.innerText = "Data berhasil disimpan!";
+                    form.reset();
+                    loadData(); // Refresh data tabel & statistik
+                } else {
+                    throw new Error(response.error);
+                }
+            })
+            .catch(err => {
+                formStatus.style.color = "var(--danger)";
+                formStatus.innerText = "Gagal menyimpan!";
+            })
+            .finally(() => {
+                btnSave.disabled = false;
+                btnSave.innerText = "Simpan Data";
+            });
+        });
+    </script>
 </body>
 </html>
