@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Kelola Kos</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #27ae60;
+            --bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            grid-column: 1 / -1;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #219150;
+        }
+
+        #status {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+
+        /* Responsif untuk layar HP */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🏠 Manajemen Data Kos</h1>
+
+    <div class="card">
+        <h3>Input Data Penghuni Baru</h3>
+        <form id="kos-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nama">Nama Penghuni</label>
+                    <input type="text" id="nama" required placeholder="Contoh: Budi Santoso">
+                </div>
+
+                <div class="form-group">
+                    <label for="kamar">Nomor Kamar</label>
+                    <input type="text" id="kamar" required placeholder="Contoh: A-01">
+                </div>
+
+                <div class="form-group">
+                    <label for="hp">No. WhatsApp/HP</label>
+                    <input type="tel" id="hp" required placeholder="08123456789">
+                </div>
+
+                <div class="form-group">
+                    <label for="tanggal">Tanggal Masuk</label>
+                    <input type="date" id="tanggal" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sewa">Biaya Sewa / Bulan (Rp)</label>
+                    <input type="number" id="sewa" required placeholder="800000">
+                </div>
+
+                <div class="form-group">
+                    <label for="statusBayar">Status Pembayaran</label>
+                    <select id="statusBayar" required>
+                        <option value="Lunas">Lunas</option>
+                        <option value="Belum Lunas">Belum Lunas</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="btn-save" class="btn-submit">Simpan Data Penghuni</button>
+            </div>
+        </form>
+        <p id="status"></p>
+    </div>
+</div>
+
+<script>
+    // masukkan URL Web App Apps Script Anda di sini
+    const scriptURL = 'URL_WEB_APP_ANDA_DI_SINI';
+
+    const form = document.getElementById('kos-form');
+    const statusText = document.getElementById('status');
+    const btnSave = document.getElementById('btn-save');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        btnSave.disabled = true;
+        btnSave.innerText = "Menyimpan Data...";
+        statusText.innerText = "";
+
+        const payload = {
+            nama: document.getElementById('nama').value,
+            kamar: document.getElementById('kamar').value,
+            hp: document.getElementById('hp').value,
+            tanggal: document.getElementById('tanggal').value,
+            sewa: document.getElementById('sewa').value,
+            status: document.getElementById('statusBayar').value
+        };
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.result === 'success') {
+                statusText.className = "success";
+                statusText.innerText = `Data Berhasil Disimpan! ID Penghuni: ${response.id}`;
+                form.reset();
+            } else {
+                throw new Error(response.error);
+            }
+        })
+        .catch(err => {
+            statusText.className = "error";
+            statusText.innerText = "Gagal menyimpan data: " + err.message;
+        })
+        .finally(() => {
+            btnSave.disabled = false;
+            btnSave.innerText = "Simpan Data Penghuni";
+        });
+    });
+</script>
+
+</body>
+</html>
